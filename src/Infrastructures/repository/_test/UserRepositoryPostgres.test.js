@@ -75,7 +75,7 @@ describe('UserRepositoryPostgres', () => {
   });
 
   describe('getPasswordByUsername', () => {
-    it('should throw InvariantError when user not found', () => {
+    it('should throw InvariantError when user not found', async () => {
       // Arrange
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
 
