@@ -21,8 +21,13 @@ exports.up = (pgm) => {
       notNull: true,
     },
     created: {
-      type: 'TIMESTAMP',
+      type: 'TIMESTAMPTZ',
       notNull: true,
+    },
+    is_delete: {
+      type: 'BOOL',
+      notNull: true,
+      default: false,
     },
   });
 

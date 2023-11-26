@@ -1,5 +1,5 @@
 const AddThread = require('../../../Domains/threads/entities/AddThread');
-const Thread = require('../../../Domains/threads/entities/Thread');
+const AddedThread = require('../../../Domains/threads/entities/AddedThread');
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const AddThreadUseCase = require('../AddThreadUseCase');
 
@@ -11,12 +11,10 @@ describe('AddThreadUseCase', () => {
       body: 'Thread Body',
     };
 
-    const mockThread = new Thread({
+    const mockAddedThread = new AddedThread({
       id: 'thread-123',
-      owner: 'user-123',
       title: useCasePayload.title,
-      body: useCasePayload.body,
-      created: '2023-11-24T22:29:00',
+      owner: 'user-123',
     });
 
     /** creating dependency of use case */
@@ -24,7 +22,7 @@ describe('AddThreadUseCase', () => {
 
     /** mocking needed function */
     mockThreadRepository.addThread = jest.fn()
-      .mockImplementation(() => Promise.resolve(mockThread));
+      .mockImplementation(() => Promise.resolve(mockAddedThread));
     
     /** creating use case instance */
     const addThreadUseCase = new AddThreadUseCase({
@@ -32,20 +30,23 @@ describe('AddThreadUseCase', () => {
     });
     
     // Action
-    const thread = await addThreadUseCase.execute(useCasePayload);
+    const addedThread = await addThreadUseCase.execute(
+      'user-123', useCasePayload
+    );
 
     // Assert
-    expect(thread).toStrictEqual(new Thread({
+    expect(addedThread).toStrictEqual(new AddedThread({
       id: 'thread-123',
-      owner: 'user-123',
       title: useCasePayload.title,
-      body: useCasePayload.body,
-      created: '2023-11-24T22:29:00',
+      owner: 'user-123',
     }));
 
-    expect(mockThreadRepository.addThread).toBeCalledWith(new AddThread({
-      title: useCasePayload.title,
-      body: useCasePayload.body,
-    }));
+    expect(mockThreadRepository.addThread).toBeCalledWith(
+      'user-123',
+      new AddThread({
+        title: useCasePayload.title,
+        body: useCasePayload.body,
+      }),
+    );
   });
 });

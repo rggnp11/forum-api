@@ -1,7 +1,8 @@
 # forum-api
 
-Prerequisites:
-- Node version 14.17.0 (managed by NVM/Node Version Manager, if possible).
+### Prerequisites:
+
+- Node version **14.17.0** (managed by NVM/Node Version Manager, if possible).
 - `.env` file that contains:
    - HOST
    - PORT
@@ -19,19 +20,23 @@ Prerequisites:
    - REFRESH_TOKEN_KEY
    - ACCCESS_TOKEN_AGE
 
-To use required Node version (in .nvmrc), run `nvm use` (if NVM is available).
+### Setting up
 
-To install dependencies, run `npm install`.
+- Run `nvm use` if NVM is available to use required Node version *(in .nvmrc)*.
+- Run `npm install` to install dependencies.
+- Run `npm run migrate up` and `npm run migrate:test up` to apply migrations to the main and test database.
 
-To run database migration:
-   - `npm run migrate create ‘<migration name>’` to create new migration file.
-   - `npm run migrate up` to run up migration which has not been applied.
-   - `npm run migrate down` to run down migration from current state.
-   - `npm run migrate redo` to rerun previous migration (to run down migration, then up migration).
+### Running tests
 
-To run database migration test:
-   - `npm run migrate:test up` to run up migration which has not been applied on the test database.
+- Run `npm run test` or `npm run test:watch` to run tests.
 
-To run test:
-   - `npm run test` to run test.
-   - `npm run test:watch` to run test continuously.
+### Starting server
+
+- Run `npm start` or `npm start:dev` to start the server in production or development respectiveliy.
+
+### Other migration commands
+
+- `npm run migrate create ‘<migration name>’` to create new migration file.
+- `npm run migrate up` to run up migration which has not been applied.
+- `npm run migrate down` to run down migration from current state.
+- `npm run migrate redo` to rerun previous migration (to run down migration, then up migration).
