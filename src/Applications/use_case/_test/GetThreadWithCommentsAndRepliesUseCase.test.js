@@ -1,6 +1,6 @@
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
-const GetThreadWithCommentsUseCase = require('../GetThreadWithCommentsUseCase');
+const GetThreadWithCommentsAndRepliesUseCase = require('../GetThreadWithCommentsAndRepliesUseCase');
 
 describe('GetThreadDetailUseCase', () => {
   it('should orchestrating the get thread detail action correctly', async () => {
@@ -38,13 +38,13 @@ describe('GetThreadDetailUseCase', () => {
       .mockImplementation(() => Promise.resolve(commentsPayload));
     
     /** creating use case instance */
-    const getThreadWithCommentsUseCase = new GetThreadWithCommentsUseCase({
+    const getThreadWithCommentsAndRepliesUseCase = new GetThreadWithCommentsAndRepliesUseCase({
       threadRepository: mockThreadRepository,
       commentRepository: mockCommentRepository,
     });
 
     // Action
-    const threadWithComments = await getThreadWithCommentsUseCase.execute(
+    const threadWithComments = await getThreadWithCommentsAndRepliesUseCase.execute(
       'thread-123'
     );
 

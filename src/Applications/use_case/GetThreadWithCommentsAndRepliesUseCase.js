@@ -1,4 +1,4 @@
-class GetThreadWithCommentsUseCase {
+class GetThreadWithCommentsAndRepliesUseCase {
   constructor({ threadRepository, commentRepository }) {
     this._threadRepository = threadRepository;
     this._commentRepository = commentRepository;
@@ -11,4 +11,4 @@ class GetThreadWithCommentsUseCase {
   }
 }
 
-module.exports = GetThreadWithCommentsUseCase;
+module.exports = GetThreadWithCommentsAndRepliesUseCase;

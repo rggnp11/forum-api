@@ -33,7 +33,7 @@ const CommentRepositoryPostgres = require('../Infrastructures/repository/Comment
 const AddCommentUseCase = require('../Applications/use_case/AddCommentUseCase');
 const DeleteCommentUseCase = require('../Applications/use_case/DeleteCommentUseCase');
 
-const GetThreadWithCommentsUseCase = require('../Applications/use_case/GetThreadWithCommentsUseCase');
+const GetThreadWithCommentsAndRepliesUseCase = require('../Applications/use_case/GetThreadWithCommentsAndRepliesUseCase');
 
 const ReplyRepository = require('../Domains/replies/ReplyRepository');
 const ReplyRepositoryPostgres = require('../Infrastructures/repository/ReplyRepositoryPostgres');
@@ -285,8 +285,8 @@ container.register([
     },
   },
   {
-    key: GetThreadWithCommentsUseCase.name,
-    Class: GetThreadWithCommentsUseCase,
+    key: GetThreadWithCommentsAndRepliesUseCase.name,
+    Class: GetThreadWithCommentsAndRepliesUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [
