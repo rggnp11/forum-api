@@ -37,9 +37,8 @@ class ThreadsHandler {
     );
     const { threadId } = request.params;
 
-    const threadWithComments = await getThreadWithCommentsAndRepliesUseCase.execute(
-      threadId
-    );
+    const threadWithComments = await getThreadWithCommentsAndRepliesUseCase
+      .execute(threadId);
 
     const response = h.response({
       status: 'success',

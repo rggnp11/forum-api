@@ -190,7 +190,7 @@ describe('/threads endpoint', () => {
       expect(responseJson.message).toEqual('thread tidak ditemukan');
     });
 
-    it('should return 200 and thread with comments', async () => {
+    it('should return 200 and thread with comments and replies', async () => {
       // Arrange
       const server = await createServer(container);
       // Add user
