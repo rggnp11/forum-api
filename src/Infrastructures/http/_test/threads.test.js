@@ -227,7 +227,7 @@ describe('/threads endpoint', () => {
       });
       const threadJson = JSON.parse(threadResponse.payload);
       // Add comments
-      await server.inject({
+      const commentResponse = await server.inject({
         method: 'POST',
         url: `/threads/${threadJson.data.addedThread.id}/comments`,
         headers: {
@@ -237,6 +237,7 @@ describe('/threads endpoint', () => {
           content: 'Comment content 1',
         },
       });
+      const commentJson = JSON.parse(commentResponse.payload);
       await server.inject({
         method: 'POST',
         url: `/threads/${threadJson.data.addedThread.id}/comments`,
@@ -245,6 +246,17 @@ describe('/threads endpoint', () => {
         },
         payload: {
           content: 'Comment content 2',
+        },
+      });
+      // Add reply
+      await server.inject({
+        method: 'POST',
+        url: `/threads/${threadJson.data.addedThread.id}/comments/${commentJson.data.addedComment.id}/replies`,
+        headers: {
+          'Authorization': `Bearer ${authJson.data.accessToken}`,
+        },
+        payload: {
+          content: 'Reply content',
         },
       });
 
@@ -258,6 +270,9 @@ describe('/threads endpoint', () => {
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(200);
       expect(responseJson.status).toEqual('success');
+      expect(responseJson.data.thread).toBeDefined();
+      expect(responseJson.data.thread.comments).toBeInstanceOf(Array);
+      // expect(responseJson.data.thread.comments[0].replies).toBeInstanceOf(Array);
     });
   });
 });
