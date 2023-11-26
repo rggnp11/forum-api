@@ -13,7 +13,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
   async addReply(userId, threadId, parentId, addReply) {
     const { content } = addReply;
     const id = `reply-${this._idGenerator()}`;
-    const created = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const created = new Date().toISOString().slice(0, 23).replace('T', ' ');
 
     const threadResult = await this._pool.query({
       text: 'SELECT id FROM threads WHERE id = $1',
