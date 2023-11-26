@@ -6,9 +6,20 @@ class GetThreadWithCommentsAndRepliesUseCase {
   }
 
   async execute(threadId) {
-    const thread = await this._threadRepository.getThreadById(threadId);
-    const comments = await this._commentRepository.getCommentsByThreadId(threadId);
-    return { ...thread, comments: comments };
+    const thread = await this._threadRepository.getThreadById(
+      threadId
+    );
+    const comments = await this._commentRepository.getCommentsByThreadId(
+      threadId
+    );
+    for (let i=0; i < comments.size; i++) {
+      const replies = await this._replyRepository.getRepliesByParentId(
+        comments[i].id
+      );
+      comments[i].replies = replies;
+    }
+    thread.comments = comments;
+    return { ...thread };
   }
 }
 
