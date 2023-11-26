@@ -12,13 +12,16 @@ class GetThreadWithCommentsAndRepliesUseCase {
     const comments = await this._commentRepository.getCommentsByThreadId(
       threadId
     );
-    for (let i=0; i < comments.size; i++) {
+
+    for (let i=0; i < comments.length; i++) {
       const replies = await this._replyRepository.getRepliesByParentId(
         comments[i].id
       );
       comments[i].replies = replies;
     }
+
     thread.comments = comments;
+
     return { ...thread };
   }
 }
