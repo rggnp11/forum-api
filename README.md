@@ -3,22 +3,27 @@
 ### Prerequisites:
 
 - Node version **14.17.0** (managed by NVM/Node Version Manager, if possible).
+
 - `.env` file that contains:
-   - HOST
-   - PORT
-   - PGHOST
-   - PGUSER
-   - PGDATABASE
-   - PGPASSWORD
-   - PGPORT
-   - PGHOST_TEST
-   - PGUSER_TEST
-   - PGDATABASE_TEST
-   - PGPASSWORD_TEST
-   - PGPORT_TEST
-   - ACCESS_TOKEN_KEY
-   - REFRESH_TOKEN_KEY
-   - ACCCESS_TOKEN_AGE
+   - `HOST`
+   - `PORT`
+   - `PGHOST`
+   - `PGUSER`
+   - `PGDATABASE`
+   - `PGPASSWORD`
+   - `PGPORT`
+   - `PGHOST_TEST`
+   - `PGUSER_TEST`
+   - `PGDATABASE_TEST`
+   - `PGPASSWORD_TEST`
+   - `PGPORT_TEST`
+   - `ACCESS_TOKEN_KEY`
+   - `REFRESH_TOKEN_KEY`
+   - `ACCCESS_TOKEN_AGE`
+
+- PostgreSQL with two databases specified in `PGDATABASE` and `PGDATABASE_TEST` of the `.env` file. The default databases are:
+   - `forumapi`
+   - `forumapi_test`
 
 ### Setting up
 
@@ -32,7 +37,7 @@
 
 ### Starting server
 
-- Run `npm start` or `npm start:dev` to start the server in production or development respectiveliy.
+- Run `npm start:dev` or `npm start` to start the server in development or production respectiveliy.
 
 ### Other migration commands
 
