@@ -4,7 +4,9 @@ class DeleteCommentUseCase {
   }
 
   async execute(userId, threadId, commentId) {
-    await this._commentRepository.deleteCommentById(userId, threadId, commentId);
+    await this._commentRepository.deleteCommentById(
+      userId, threadId, commentId
+    );
   }
 }
 

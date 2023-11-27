@@ -13,7 +13,9 @@ describe('DeleteCommentUseCase', () => {
     });
 
     // Action
-    await deleteCommentUseCase.execute('user-123', 'thread-123', 'comment-123');
+    await deleteCommentUseCase.execute(
+      'user-123', 'thread-123', 'comment-123'
+    );
 
     // Assert
     expect(mockCommentRepository.deleteCommentById)

@@ -272,7 +272,8 @@ describe('/threads endpoint', () => {
       expect(responseJson.status).toEqual('success');
       expect(responseJson.data.thread).toBeDefined();
       expect(responseJson.data.thread.comments).toBeInstanceOf(Array);
-      // expect(responseJson.data.thread.comments[0].replies).toBeInstanceOf(Array);
+      expect(responseJson.data.thread.comments[0].replies)
+        .toBeInstanceOf(Array);
     });
   });
 });

@@ -4,7 +4,9 @@ class DeleteReplyUseCase {
   }
 
   async execute(userId, threadId, parentId, replyId) {
-    await this._replyRepository.deleteReplyById(userId, threadId, parentId, replyId);
+    await this._replyRepository.deleteReplyById(
+      userId, threadId, parentId, replyId
+    );
   }
 }
 

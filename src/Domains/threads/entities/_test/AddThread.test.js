@@ -8,19 +8,26 @@ describe('AddThread entities', () => {
     };
 
     // Action & Assert
-    expect(() => new AddThread(payload)).toThrowError('ADD_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');
+    expect(() => new AddThread(payload)).toThrowError(
+      'ADD_THREAD.NOT_CONTAIN_NEEDED_PROPERTY'
+    );
   });
 
-  it('should throw error when payload not meet data type specification', () => {
-    // Arrange
-    const payload = {
-      title: 'Thread Title',
-      body: 1234567890,
-    };
+  it(
+    'should throw error when payload not meet data type specification',
+    () => {
+      // Arrange
+      const payload = {
+        title: 'Thread Title',
+        body: 1234567890,
+      };
 
-    // Action & Assert
-    expect(() => new AddThread(payload)).toThrowError('ADD_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION');
-  });
+      // Action & Assert
+      expect(() => new AddThread(payload)).toThrowError(
+        'ADD_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION'
+      );
+    }
+  );
 
   it('should create AddThread entities correctly', () => {
     // Arrange

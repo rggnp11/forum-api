@@ -7,7 +7,9 @@ class AddReplyUseCase {
 
   async execute(userId, threadId, parentId, addReplyPayload) {
     const addReply = new AddReply(addReplyPayload);
-    return await this._replyRepository.addReply(userId, threadId, parentId, addReply);
+    return await this._replyRepository.addReply(
+      userId, threadId, parentId, addReply
+    );
   }
 }
 

@@ -6,18 +6,25 @@ describe('AddReply entities', () => {
     const payload = {};
 
     // Action & Assert
-    expect(() => new AddReply(payload)).toThrowError('ADD_REPLY.NOT_CONTAIN_NEEDED_PROPERTY');
+    expect(() => new AddReply(payload)).toThrowError(
+      'ADD_REPLY.NOT_CONTAIN_NEEDED_PROPERTY'
+    );
   });
 
-  it('should throw error when payload not meet data type specification', () => {
-    // Arrange
-    const payload = {
-      content: 123,
-    };
+  it(
+    'should throw error when payload not meet data type specification',
+    () => {
+      // Arrange
+      const payload = {
+        content: 123,
+      };
 
-    // Action & Assert
-    expect(() => new AddReply(payload)).toThrowError('ADD_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION');
-  });
+      // Action & Assert
+      expect(() => new AddReply(payload)).toThrowError(
+        'ADD_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION'
+      );
+    }
+  );
 
   it('should create AddReply entities correctly', () => {
     // Arrange

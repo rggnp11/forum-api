@@ -187,7 +187,9 @@ describe('/threads/{threadId}/comments endpoint', () => {
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(404);
       expect(responseJson.status).toEqual('fail');
-      expect(responseJson.message).toEqual('thread tidak ada atau tidak valid');
+      expect(responseJson.message).toEqual(
+        'thread tidak ada atau tidak valid'
+      );
     });
 
     it('should response 201 and added comment', async () => {
@@ -242,7 +244,9 @@ describe('/threads/{threadId}/comments endpoint', () => {
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(201);
       expect(responseJson.status).toEqual('success');
-      expect(responseJson.data.addedComment.content).toEqual('Comment content');
+      expect(responseJson.data.addedComment.content).toEqual(
+        'Comment content'
+      );
     });
   });
 

@@ -134,23 +134,26 @@ describe('ReplyRepositoryPostgres', () => {
         .toThrowError(NotFoundError);
     });
 
-    it('should throw AuthorizationError when user is not the owner', async () => {
-      // Arrange
-      const addReply = new AddReply({ content: 'Reply content' });
-      const fakeIdGenerator = () => '123'; // stub!
-      const replyRepositoryPostgres = new ReplyRepositoryPostgres(
-        pool, fakeIdGenerator
-      );
-      const addedReply = await replyRepositoryPostgres.addReply(
-        'user-123', 'thread-123', 'comment-123', addReply
-      );
+    it(
+      'should throw AuthorizationError when user is not the owner',
+      async () => {
+        // Arrange
+        const addReply = new AddReply({ content: 'Reply content' });
+        const fakeIdGenerator = () => '123'; // stub!
+        const replyRepositoryPostgres = new ReplyRepositoryPostgres(
+          pool, fakeIdGenerator
+        );
+        const addedReply = await replyRepositoryPostgres.addReply(
+          'user-123', 'thread-123', 'comment-123', addReply
+        );
 
-      // Action & Assert
-      expect(replyRepositoryPostgres.deleteReplyById(
-        'user-XXXXXXXXXX', 'thread-123', 'comment-123', addedReply.id
-      )).rejects
-        .toThrowError(AuthorizationError);
-    });
+        // Action & Assert
+        expect(replyRepositoryPostgres.deleteReplyById(
+          'user-XXXXXXXXXX', 'thread-123', 'comment-123', addedReply.id
+        )).rejects
+          .toThrowError(AuthorizationError);
+      }
+    );
 
     it('should mark reply as deleted', async () => {
       // Arrange
