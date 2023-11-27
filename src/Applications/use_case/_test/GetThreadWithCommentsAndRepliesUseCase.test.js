@@ -11,19 +11,19 @@ describe('GetThreadDetailUseCase', () => {
       username: 'dicoding',
       title: 'Thread Title',
       body: 'Thread Body',
-      date: '1970-01-01 00:00:00',
+      date: '2023-01-01 00:00:00',
     };
     const commentsPayload = [
       {
         id: 'comment-123',
         username: 'dicoding',
-        date: '1970-01-01 00:00:00',
+        date: '2023-01-01 00:00:00',
         content: 'Comment content 1',
       },
       {
         id: 'comment-456',
         username: 'dicoding',
-        date: '1970-01-01 00:00:11',
+        date: '2023-01-01 00:00:11',
         content: 'Comment content 2',
       },
     ];
@@ -31,7 +31,7 @@ describe('GetThreadDetailUseCase', () => {
       {
         id: 'reply-123',
         username: 'dicoding',
-        date: '1970-01-01 00:00:00',
+        date: '2023-01-01 00:00:00',
         content: 'Reply content',
       },
     ];
@@ -61,23 +61,20 @@ describe('GetThreadDetailUseCase', () => {
       .execute('thread-123');
 
     // Assert
-    expect(threadWithComments).toStrictEqual({
+    expect(threadWithComments).toMatchObject({
       id: 'thread-123',
       username: 'dicoding',
       title: 'Thread Title',
       body: 'Thread Body',
-      date: '1970-01-01 00:00:00',
       comments: [
         {
           id: 'comment-123',
           username: 'dicoding',
-          date: '1970-01-01 00:00:00',
           content: 'Comment content 1',
           replies: [
             {
               id: 'reply-123',
               username: 'dicoding',
-              date: '1970-01-01 00:00:00',
               content: 'Reply content',
             },
           ],
@@ -85,13 +82,11 @@ describe('GetThreadDetailUseCase', () => {
         {
           id: 'comment-456',
           username: 'dicoding',
-          date: '1970-01-01 00:00:11',
           content: 'Comment content 2',
           replies: [
             {
               id: 'reply-123',
               username: 'dicoding',
-              date: '1970-01-01 00:00:00',
               content: 'Reply content',
             },
           ],

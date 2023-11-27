@@ -7,7 +7,7 @@ const ThreadsTableTestHelper = {
     owner = 'user-123',
     title = 'Thread Title',
     body = 'Thread Body',
-    created = '1970-01-01 00:00:00',
+    created = '2023-01-01 00:00:00',
   }) {
     const query = {
       text: 'INSERT INTO threads VALUES($1, $2, $3, $4, $5)',

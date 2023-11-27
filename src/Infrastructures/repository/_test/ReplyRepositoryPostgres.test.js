@@ -21,7 +21,7 @@ describe('ReplyRepositoryPostgres', () => {
       owner: 'user-123',
       title: 'Thread Title',
       body: 'Thread Body',
-      created: '1970-01-01 00:00:00',
+      created: '2023-01-01 00:00:00',
     });
   });
 
@@ -32,7 +32,7 @@ describe('ReplyRepositoryPostgres', () => {
       threadId: 'thread-123',
       parentId: null,
       content: 'Comment content',
-      created: '1970-01-01 00:00:00',
+      created: '2023-01-01 00:00:00',
       isDelete: false,
     });
   });
@@ -185,7 +185,7 @@ describe('ReplyRepositoryPostgres', () => {
         threadId: 'thread-123',
         parentId: 'comment-123',
         content: 'Reply content 123',
-        created: '1970-01-01 00:00:00',
+        created: '2023-01-01 00:00:00',
         isDelete: false,
       });
       await CommentsTableTestHelper.addReply({
@@ -194,7 +194,7 @@ describe('ReplyRepositoryPostgres', () => {
         threadId: 'thread-123',
         parentId: 'comment-123',
         content: 'Reply content 456',
-        created: '1970-01-01 00:00:11',
+        created: '2023-01-01 00:00:11',
         isDelete: false,
       });
       const replyRepositoryPostgres = new ReplyRepositoryPostgres(

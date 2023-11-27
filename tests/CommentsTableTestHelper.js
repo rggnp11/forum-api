@@ -8,7 +8,7 @@ const CommentsTableTestHelper = {
     threadId = 'thread-123',
     parentId = null,
     content = 'Comment content',
-    created = '1970-01-01 00:00:00',
+    created = '2023-01-01 00:00:00',
     isDelete = false,
   }) {
     const query = {
@@ -25,7 +25,7 @@ const CommentsTableTestHelper = {
     threadId = 'thread-123',
     parentId = 'comment-123',
     content = 'Comment content',
-    created = '1970-01-01 00:00:00',
+    created = '2023-01-01 00:00:00',
     isDelete = false,
   }) {
     await this.addComment({

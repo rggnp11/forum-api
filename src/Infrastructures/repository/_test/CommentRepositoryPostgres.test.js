@@ -21,7 +21,7 @@ describe('CommentRepositoryPostgres', () => {
       owner: 'user-123',
       title: 'Thread Title',
       body: 'Thread Body',
-      created: '1970-01-01 00:00:00',
+      created: '2023-01-01 00:00:00',
     });
   });
 
@@ -158,7 +158,7 @@ describe('CommentRepositoryPostgres', () => {
         threadId: 'thread-123',
         parentId: null,
         content: 'Comment content 123',
-        created: '1970-01-01 00:00:00',
+        created: '2023-01-01 00:00:00',
         isDelete: false,
       });
       await CommentsTableTestHelper.addComment({
@@ -167,7 +167,7 @@ describe('CommentRepositoryPostgres', () => {
         threadId: 'thread-123',
         parentId: null,
         content: 'Comment content 456',
-        created: '1970-01-01 00:00:11',
+        created: '2023-01-01 00:00:11',
         isDelete: false,
       });
       const commentRepositoryPostgres = new CommentRepositoryPostgres(
