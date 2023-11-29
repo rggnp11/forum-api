@@ -21,7 +21,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     });
 
     if (!threadResult.rowCount) {
-      throw new NotFoundError('thread tidak ada atau tidak valid');
+      throw new NotFoundError('thread tidak ditemukan atau tidak valid');
     }
 
     const parentResult = await this._pool.query({
@@ -30,7 +30,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     });
 
     if (!parentResult.rowCount) {
-      throw new NotFoundError('comment tidak ada atau tidak valid');
+      throw new NotFoundError('comment tidak ditemukan atau tidak valid');
     }
 
     const query = {

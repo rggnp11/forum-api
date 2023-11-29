@@ -214,7 +214,7 @@ describe('/threads/{threadId}/comments/{commentId}/replies endpoint', () => {
         expect(response.statusCode).toEqual(404);
         expect(responseJson.status).toEqual('fail');
         expect(responseJson.message).toEqual(
-          'thread tidak ada atau tidak valid'
+          'thread tidak ditemukan atau tidak valid'
         );
       });
 
@@ -271,7 +271,7 @@ describe('/threads/{threadId}/comments/{commentId}/replies endpoint', () => {
         expect(response.statusCode).toEqual(404);
         expect(responseJson.status).toEqual('fail');
         expect(responseJson.message).toEqual(
-          'comment tidak ada atau tidak valid'
+          'comment tidak ditemukan atau tidak valid'
         );
       });
 

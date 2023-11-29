@@ -187,7 +187,7 @@ describe('/threads endpoint', () => {
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(404);
       expect(responseJson.status).toEqual('fail');
-      expect(responseJson.message).toEqual('thread tidak ditemukan');
+      expect(responseJson.message).toEqual('thread tidak ditemukan atau tidak valid');
     });
 
     it('should return 200 and thread with comments and replies', async () => {

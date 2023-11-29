@@ -41,7 +41,7 @@ class CommentRepositoryPostgres extends CommentRepository {
     });
 
     if (!commentResult.rowCount) {
-      throw new NotFoundError(`comment tidak ada atau tidak valid`);
+      throw new NotFoundError(`comment tidak ditemukan atau tidak valid`);
     }
 
     if (commentResult.rows[0].owner !== userId) {
