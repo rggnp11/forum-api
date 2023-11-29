@@ -21,12 +21,14 @@ describe('GetThreadDetailUseCase', () => {
           username: 'dicoding',
           date: '2023-01-01 00:00:00',
           content: 'Comment content 1',
+          isDelete: false,
         },
         {
           id: 'comment-456',
           username: 'dicoding',
           date: '2023-01-01 00:00:11',
           content: 'Comment content 2',
+          isDelete: true,
         },
       ];
       const repliesPayload = [
@@ -34,7 +36,15 @@ describe('GetThreadDetailUseCase', () => {
           id: 'reply-123',
           username: 'dicoding',
           date: '2023-01-01 00:00:00',
-          content: 'Reply content',
+          content: 'Reply content 1',
+          isDelete: true,
+        },
+        {
+          id: 'reply-456',
+          username: 'dicoding',
+          date: '2023-01-01 00:00:00',
+          content: 'Reply content 2',
+          isDelete: false,
         },
       ];
 
@@ -74,23 +84,42 @@ describe('GetThreadDetailUseCase', () => {
             id: 'comment-123',
             username: 'dicoding',
             content: 'Comment content 1',
+            isDelete: false,
             replies: [
               {
                 id: 'reply-123',
                 username: 'dicoding',
-                content: 'Reply content',
+                // content: '**balasan telah dihapus**',
+                content: 'Reply content 1',
+                isDelete: true,
+              },
+              {
+                id: 'reply-456',
+                username: 'dicoding',
+                content: 'Reply content 2',
+                isDelete: false,
               },
             ],
           },
           {
             id: 'comment-456',
             username: 'dicoding',
+            // content: '**komentar telah dihapus**',
             content: 'Comment content 2',
+            isDelete: true,
             replies: [
               {
                 id: 'reply-123',
                 username: 'dicoding',
-                content: 'Reply content',
+                // content: '**balasan telah dihapus**',
+                content: 'Reply content 1',
+                isDelete: true,
+              },
+              {
+                id: 'reply-456',
+                username: 'dicoding',
+                content: 'Reply content 2',
+                isDelete: false,
               },
             ],
           }

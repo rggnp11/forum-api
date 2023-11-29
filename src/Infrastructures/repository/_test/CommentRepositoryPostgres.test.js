@@ -148,7 +148,7 @@ describe('CommentRepositoryPostgres', () => {
       const comments = await commentRepositoryPostgres.getCommentsByThreadId(
         'thread-123'
       );
-      expect(comments[0].content).toEqual('**komentar telah dihapus**');
+      expect(comments[0].is_delete).toEqual(true);
     });
   });
 

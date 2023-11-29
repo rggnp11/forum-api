@@ -79,7 +79,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
         users.username,
         comments.created AS date,
         comments.content,
-        comments.is_delete AS deleted
+        comments.is_delete
       FROM comments
       LEFT JOIN users ON comments.owner = users.id
       WHERE comments.parent_id = $1
@@ -88,14 +88,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
       values: [parentId],
     };
 
-    const { rowCount, rows } = await this._pool.query(query);
-
-    for (let i=0; i < rowCount; i++) {
-      if (rows[i].deleted) {
-        rows[i].content = '**balasan telah dihapus**';
-      }
-      delete rows[i].deleted;
-    }
+    const { rows } = await this._pool.query(query);
 
     return rows;
   }

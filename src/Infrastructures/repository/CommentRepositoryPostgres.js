@@ -70,7 +70,7 @@ class CommentRepositoryPostgres extends CommentRepository {
         users.username,
         comments.created AS date,
         comments.content,
-        comments.is_delete AS deleted
+        comments.is_delete
       FROM comments
       LEFT JOIN users ON comments.owner = users.id
       WHERE comments.thread_id = $1
@@ -79,14 +79,7 @@ class CommentRepositoryPostgres extends CommentRepository {
       values: [threadId],
     };
 
-    const { rowCount, rows } = await this._pool.query(query);
-
-    for (let i=0; i < rowCount; i++) {
-      if (rows[i].deleted) {
-        rows[i].content = '**komentar telah dihapus**';
-      }
-      delete rows[i].deleted;
-    }
+    const { rows } = await this._pool.query(query);
 
     return rows;
   }
