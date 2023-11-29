@@ -40,7 +40,7 @@ describe('AddReplyUseCase', () => {
       owner: 'user-123',
     }));
 
-    expect(mockReplyRepository.addReply).toBeCalledWith(
+    expect(mockReplyRepository.addReply).toHaveBeenCalledWith(
       'user-123',
       'thread-123',
       'comment-123',

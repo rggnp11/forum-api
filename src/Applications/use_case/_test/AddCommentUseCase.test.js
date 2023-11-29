@@ -72,7 +72,7 @@ describe('AddCommentUseCase', () => {
       owner: 'user-123',
     }));
 
-    expect(mockCommentRepository.addComment).toBeCalledWith(
+    expect(mockCommentRepository.addComment).toHaveBeenCalledWith(
       'user-123',
       'thread-123',
       new AddComment({
