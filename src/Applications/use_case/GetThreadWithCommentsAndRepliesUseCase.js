@@ -1,3 +1,5 @@
+const NotFoundError = require("../../Commons/exceptions/NotFoundError");
+
 class GetThreadWithCommentsAndRepliesUseCase {
   constructor({ threadRepository,
     commentRepository, replyRepository }) {
@@ -10,6 +12,11 @@ class GetThreadWithCommentsAndRepliesUseCase {
     const thread = await this._threadRepository.getThreadById(
       threadId
     );
+
+    if (thread === null) {
+      throw new NotFoundError('thread tidak ditemukan atau tidak valid');
+    }
+
     const commentsData = await this._commentRepository.getCommentsByThreadId(
       threadId
     );

@@ -106,7 +106,7 @@ describe('ThreadRepositoryPostgres', () => {
   });
 
   describe('getThreadById function', () => {
-    it('should return correct thread', async () => {
+    it('should return correct thread when thread exists', async () => {
       // Arrange
       await ThreadsTableTestHelper.addThread({
         id: 'thread-123',

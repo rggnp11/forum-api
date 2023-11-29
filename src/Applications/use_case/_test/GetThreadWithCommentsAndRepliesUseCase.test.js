@@ -2,8 +2,32 @@ const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
 const ReplyRepository = require('../../../Domains/replies/ReplyRepository');
 const GetThreadWithCommentsAndRepliesUseCase = require('../GetThreadWithCommentsAndRepliesUseCase');
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 
 describe('GetThreadDetailUseCase', () => {
+  it('should throw NotFoundError when thread not exist', async() => {
+    // Arrange
+    /** creating dependency of use case */
+    const mockThreadRepository = new ThreadRepository();
+
+    /** mocking needed function */
+    mockThreadRepository.getThreadById = jest.fn()
+      .mockImplementation(() => Promise.resolve(null));
+    
+    /** creating use case instance */
+    const getThreadWithCommentsAndRepliesUseCase =
+      new GetThreadWithCommentsAndRepliesUseCase({
+        threadRepository: mockThreadRepository,
+        commentRepository: new CommentRepository(),
+        replyRepository: new ReplyRepository(),
+      });
+    
+    // Action & Assert
+    expect(getThreadWithCommentsAndRepliesUseCase.execute('thread-123'))
+      .rejects
+      .toThrow(NotFoundError);
+  });
+
   it(
     'should orchestrating the get thread detail action correctly',
     async () => {
