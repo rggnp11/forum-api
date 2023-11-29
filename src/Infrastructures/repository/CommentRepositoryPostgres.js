@@ -15,15 +15,6 @@ class CommentRepositoryPostgres extends CommentRepository {
     const id = `comment-${this._idGenerator()}`;
     const created = new Date().toISOString().slice(0, 23).replace('T', ' ');
 
-    const threadResult = await this._pool.query({
-      text: 'SELECT id FROM threads WHERE id = $1',
-      values: [threadId],
-    });
-
-    if (!threadResult.rowCount) {
-      throw new NotFoundError('thread tidak ada atau tidak valid');
-    }
-
     const query = {
       text: `INSERT INTO comments (
         id,

@@ -36,21 +36,6 @@ describe('CommentRepositoryPostgres', () => {
   });
 
   describe('addComment function', () => {
-    it('should throw NotFoundError when thread not exist', async () => {
-      // Arrange
-      const addComment = new AddComment({ content: 'Comment content' });
-      const fakeIdGenerator = () => '123'; // stub!
-      const commentRepositoryPostgres = new CommentRepositoryPostgres(
-        pool, fakeIdGenerator
-      );
-
-      // Action & Assert
-      expect(commentRepositoryPostgres.addComment(
-        'user-123', 'thread-XXXXXXXXXX', addComment
-      )).rejects
-        .toThrowError(NotFoundError);
-    });
-
     it('should persis addComment and return comment correctly', async () => {
       // Arrange
       const addComment = new AddComment({ content: 'Comment content' });
