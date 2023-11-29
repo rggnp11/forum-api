@@ -40,14 +40,6 @@ class CommentRepositoryPostgres extends CommentRepository {
       values: [threadId, commentId],
     });
 
-    if (!commentResult.rowCount) {
-      throw new NotFoundError(`comment tidak ditemukan atau tidak valid`);
-    }
-
-    if (commentResult.rows[0].owner !== userId) {
-      throw new AuthorizationError('user bukan owner dari comment');
-    }
-
     this._pool.query({
       text: 'UPDATE comments SET is_delete = true WHERE thread_id = $1 AND id = $2',
       values: [threadId, commentId],

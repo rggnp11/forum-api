@@ -79,40 +79,6 @@ describe('CommentRepositoryPostgres', () => {
   });
 
   describe('deleteCommentById function', () => {
-    it('should throw NotFoundError when comment not exist', async () => {
-      // Arrange
-      const commentRepositoryPostgres = new CommentRepositoryPostgres(
-        pool, {}
-      );
-
-      // Action & Assert
-      expect(commentRepositoryPostgres.deleteCommentById(
-        'thread-XXXXXXXXXX', 'comment-XXXXXXXXXX'
-      )).rejects
-        .toThrowError(NotFoundError);
-    });
-
-    it(
-      'should throw AuthorizationError when user is not the owner',
-      async () => {
-        // Arrange
-        const addComment = new AddComment({ content: 'Comment content' });
-        const fakeIdGenerator = () => '123'; // stub!
-        const commentRepositoryPostgres = new CommentRepositoryPostgres(
-          pool, fakeIdGenerator
-        );
-        const addedComment = await commentRepositoryPostgres.addComment(
-          'user-123', 'thread-123', addComment
-        );
-
-        // Action & Assert
-        expect(commentRepositoryPostgres.deleteCommentById(
-          'user-456', 'thread-123', addedComment.id
-        )).rejects
-          .toThrowError(AuthorizationError);
-      }
-    );
-
     it('should mark comment as deleted', async () => {
       // Arrange
       const addComment = new AddComment({ content: 'Comment content' });
