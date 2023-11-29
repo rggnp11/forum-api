@@ -7,9 +7,9 @@ class DeleteCommentUseCase {
   }
 
   async execute(userId, threadId, commentId) {
-    const commentAvailable = await this._commentRepository
+    const isCommentAvailable = await this._commentRepository
       .verifyCommentAvailability(commentId);
-    if (!commentAvailable) {
+    if (!isCommentAvailable) {
       throw new NotFoundError('komentar tidak ditemukan atau tidak valid');
     }
 

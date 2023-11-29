@@ -32,6 +32,28 @@ class CommentRepositoryPostgres extends CommentRepository {
     return new AddedComment({ ...result.rows[0] });
   }
 
+  async verifyCommentAvailability(commentId) {
+    const { rowCount } = await this._pool.query({
+      text: 'SELECT id FROM comments WHERE id = $1',
+      values: [commentId],
+    });
+
+    return rowCount > 0;
+  }
+
+  async verifyCommentOwner(userId, commentId) {
+    const { rowCount, rows } = await this._pool.query({
+      text: 'SELECT owner FROM comments WHERE id = $1',
+      values: [commentId],
+    });
+
+    if (rowCount > 0 && rows[0].owner === userId) {
+      return true;
+    }
+
+    return false;
+  }
+
   async deleteCommentById(threadId, commentId) {
     await this._pool.query({
       text: 'UPDATE comments SET is_delete = true WHERE thread_id = $1 AND id = $2',

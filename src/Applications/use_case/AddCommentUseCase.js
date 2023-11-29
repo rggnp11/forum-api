@@ -10,9 +10,9 @@ class AddCommentUseCase {
   async execute(userId, threadId, addCommentPayload) {
     const addComment = new AddComment(addCommentPayload);
 
-    const threadAvailable = await this._threadRepository
+    const isThreadAvailable = await this._threadRepository
       .verifyThreadAvailability(threadId);
-    if (!threadAvailable) {
+    if (!isThreadAvailable) {
       throw new NotFoundError('thread tidak ditemukan atau tidak valid');
     }
 

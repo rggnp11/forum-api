@@ -75,12 +75,11 @@ describe('ThreadRepositoryPostgres', () => {
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
 
       // Action
-      const threadExists = await threadRepositoryPostgres.verifyThreadAvailability(
-        'thread-123'
-      );
+      const isThreadAvailable = await threadRepositoryPostgres
+        .verifyThreadAvailability('thread-123');
 
       // Assert
-      expect(threadExists).toEqual(false);
+      expect(isThreadAvailable).toEqual(false);
     });
 
     it('should return true when thread exists', async () => {
@@ -95,12 +94,11 @@ describe('ThreadRepositoryPostgres', () => {
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
 
       // Action
-      const threadExists = await threadRepositoryPostgres.verifyThreadAvailability(
-        'thread-123'
-      );
+      const isThreadAvailable = await threadRepositoryPostgres
+        .verifyThreadAvailability('thread-123');
 
       // Assert
-      expect(threadExists).toEqual(true);
+      expect(isThreadAvailable).toEqual(true);
     });
   });
 

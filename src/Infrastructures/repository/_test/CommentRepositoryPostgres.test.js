@@ -76,6 +76,84 @@ describe('CommentRepositoryPostgres', () => {
     });
   });
 
+  describe('verifyCommentAvailability function', () => {
+    it('should return false if comment not exist', async () => {
+      // Arrange
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(
+        pool, {}
+      );
+
+      // Action
+      const isCommentAvailable = await commentRepositoryPostgres
+        .verifyCommentAvailability('comment-123');
+      
+      // Assert
+      expect(isCommentAvailable).toEqual(false);
+    });
+
+    it('should return true if comment exists', async () => {
+      // Arrange
+      const addComment = new AddComment({ content: 'Comment content' });
+      const fakeIdGenerator = () => '123'; // stub!
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(
+        pool, fakeIdGenerator
+      );
+      // Add comment
+      const addedComment = await commentRepositoryPostgres.addComment(
+        'user-123', 'thread-123', addComment
+      );
+
+      // Action
+      const isCommentAvailable = await commentRepositoryPostgres
+        .verifyCommentAvailability(addedComment.id);
+      
+      // Assert
+      expect(isCommentAvailable).toEqual(true);
+    });
+  });
+
+  describe('verifyCommentOwner', () => {
+    it('should return false when user is not comment owner', async () => {
+      // Arrange
+      const addComment = new AddComment({ content: 'Comment content' });
+      const fakeIdGenerator = () => '123'; // stub!
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(
+        pool, fakeIdGenerator
+      );
+      // Add comment
+      const addedComment = await commentRepositoryPostgres.addComment(
+        'user-123', 'thread-123', addComment
+      );
+
+      // Action
+      const isCommentOwner = await commentRepositoryPostgres
+        .verifyCommentOwner('user-456', addedComment.id);
+        
+      // Assert
+      expect(isCommentOwner).toEqual(false);
+    });
+
+    it('should return true when user is comment owner', async () => {
+      // Arrange
+      const addComment = new AddComment({ content: 'Comment content' });
+      const fakeIdGenerator = () => '123'; // stub!
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(
+        pool, fakeIdGenerator
+      );
+      // Add comment
+      const addedComment = await commentRepositoryPostgres.addComment(
+        'user-123', 'thread-123', addComment
+      );
+
+      // Action
+      const isCommentOwner = await commentRepositoryPostgres
+        .verifyCommentOwner('user-123', addedComment.id);
+        
+      // Assert
+      expect(isCommentOwner).toEqual(true);
+    });
+  });
+
   describe('deleteCommentById function', () => {
     it('should mark comment as deleted', async () => {
       // Arrange
