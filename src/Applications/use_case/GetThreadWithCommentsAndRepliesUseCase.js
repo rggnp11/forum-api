@@ -1,5 +1,6 @@
 class GetThreadWithCommentsAndRepliesUseCase {
-  constructor({ threadRepository, commentRepository, replyRepository }) {
+  constructor({ threadRepository,
+    commentRepository, replyRepository }) {
     this._threadRepository = threadRepository;
     this._commentRepository = commentRepository;
     this._replyRepository = replyRepository;
@@ -9,21 +10,45 @@ class GetThreadWithCommentsAndRepliesUseCase {
     const thread = await this._threadRepository.getThreadById(
       threadId
     );
-    const comments = await this._commentRepository.getCommentsByThreadId(
+    const commentsData = await this._commentRepository.getCommentsByThreadId(
       threadId
     );
 
-    for (let i=0; i < comments.length; i++) {
-      const replies = await this._replyRepository.getRepliesByParentId(
-        comments[i].id
+    const comments = [];
+    for (let i=0; i < commentsData.length; i++) {
+      const repliesData = await this._replyRepository.getRepliesByParentId(
+        commentsData[i].id
       );
-      comments[i].replies = replies;
+
+      const replies = [];
+      for (let j=0; j < repliesData.length; j++) {
+        replies.push(this.dataToReply(repliesData[j]));
+      }
+
+      comments.push(this.dataToComment(commentsData[i], replies));
     }
 
-    thread.comments = comments;
-
-    return { ...thread };
+    return { ...thread, comments };
   }
+
+  dataToComment({id, username, date, content, is_delete}, replies) {
+    return {
+      id,
+      username,
+      date,
+      content: (is_delete === true ? '**komentar telah dihapus**' : content),
+      replies,
+    };
+  };
+
+  dataToReply({id, username, date, content, is_delete}) {
+    return {
+      id,
+      username,
+      date,
+      content: (is_delete === true ? '**balasan telah dihapus**' : content),
+    };
+  };
 }
 
 module.exports = GetThreadWithCommentsAndRepliesUseCase;
