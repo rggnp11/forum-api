@@ -32,6 +32,28 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     return new AddedReply({ ...result.rows[0] });
   }
 
+  async verifyReplyAvailability(replyId) {
+    const { rowCount } = await this._pool.query({
+      text: 'SELECT id FROM comments WHERE id = $1',
+      values: [replyId],
+    });
+
+    return rowCount > 0;
+  }
+
+  async verifyReplyOwner(userId, replyId) {
+    const { rowCount, rows } = await this._pool.query({
+      text: 'SELECT owner FROM comments WHERE id = $1',
+      values: [replyId],
+    });
+
+    if (rowCount > 0 && rows[0].owner === userId) {
+      return true;
+    }
+
+    return false;
+  }
+
   async deleteReplyById(threadId, parentId, replyId) {
     this._pool.query({
       text: 'UPDATE comments SET is_delete = true WHERE thread_id = $1 AND parent_id = $2 AND id = $3',

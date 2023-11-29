@@ -88,6 +88,84 @@ describe('ReplyRepositoryPostgres', () => {
     });
   });
 
+  describe('verifyReplyAvailability function', () => {
+    it('should return false if reply not exist', async () => {
+      // Arrange
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(
+        pool, {}
+      );
+
+      // Action
+      const isReplyAvailable = await replyRepositoryPostgres
+        .verifyReplyAvailability('reply-123');
+      
+      // Assert
+      expect(isReplyAvailable).toEqual(false);
+    });
+
+    it('should return true if comment exists', async () => {
+      // Arrange
+      const addReply = new AddReply({ content: 'Reply content' });
+      const fakeIdGenerator = () => '123'; // stub!
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(
+        pool, fakeIdGenerator
+      );
+      // Add reply
+      const addedReply = await replyRepositoryPostgres.addReply(
+        'user-123', 'thread-123', 'comment-123', addReply
+      );
+
+      // Action
+      const isReplyAvailable = await replyRepositoryPostgres
+        .verifyReplyAvailability(addedReply.id);
+      
+      // Assert
+      expect(isReplyAvailable).toEqual(true);
+    });
+  });
+
+  describe('verifyReplyOwner', () => {
+    it('should return false when user is not reply owner', async () => {
+      // Arrange
+      const addReply = new AddReply({ content: 'Reply content' });
+      const fakeIdGenerator = () => '123'; // stub!
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(
+        pool, fakeIdGenerator
+      );
+      // Add reply
+      const addedReply = await replyRepositoryPostgres.addReply(
+        'user-123', 'thread-123', 'comment-123', addReply
+      );
+
+      // Action
+      const isReplyOwner = await replyRepositoryPostgres
+        .verifyReplyOwner('user-456', addedReply.id);
+        
+      // Assert
+      expect(isReplyOwner).toEqual(false);
+    });
+
+    it('should return true when user is reply owner', async () => {
+      // Arrange
+      const addReply = new AddReply({ content: 'Reply content' });
+      const fakeIdGenerator = () => '123'; // stub!
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(
+        pool, fakeIdGenerator
+      );
+      // Add reply
+      const addedReply = await replyRepositoryPostgres.addReply(
+        'user-123', 'thread-123', 'comment-123', addReply
+      );
+
+      // Action
+      const isReplyOwner = await replyRepositoryPostgres
+        .verifyReplyOwner('user-123', addedReply.id);
+        
+      // Assert
+      expect(isReplyOwner).toEqual(true);
+    });
+  });
+
   describe('deleteReplyById function', () => {
     it('should mark reply as deleted', async () => {
       // Arrange
