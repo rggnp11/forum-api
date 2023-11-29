@@ -20,9 +20,7 @@ class DeleteReplyUseCase {
       throw new AuthorizationError('user bukan owner dari balasan');
     }
 
-    await this._replyRepository.deleteReplyById(
-      userId, threadId, parentId, replyId
-    );
+    await this._replyRepository.deleteReplyById(threadId, parentId, replyId);
   }
 }
 

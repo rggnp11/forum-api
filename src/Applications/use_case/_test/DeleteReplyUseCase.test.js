@@ -65,7 +65,7 @@ describe('DeleteReplyUseCase', () => {
     // Assert
     expect(mockReplyRepository.deleteReplyById)
       .toHaveBeenCalledWith(
-        'user-123', 'thread-123', 'comment-123', 'reply-123'
+        'thread-123', 'comment-123', 'reply-123'
       );
   });
 });
