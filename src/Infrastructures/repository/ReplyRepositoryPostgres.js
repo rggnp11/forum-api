@@ -1,5 +1,3 @@
-const NotFoundError = require('../../Commons/exceptions/NotFoundError');
-const AuthorizationError = require('../../Commons/exceptions/AuthorizationError');
 const ReplyRepository = require('../../Domains/replies/ReplyRepository');
 const AddedReply = require('../../Domains/replies/entities/AddedReply');
 
@@ -14,24 +12,6 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     const { content } = addReply;
     const id = `reply-${this._idGenerator()}`;
     const created = new Date().toISOString().slice(0, 23).replace('T', ' ');
-
-    const threadResult = await this._pool.query({
-      text: 'SELECT id FROM threads WHERE id = $1',
-      values: [threadId],
-    });
-
-    if (!threadResult.rowCount) {
-      throw new NotFoundError('thread tidak ditemukan atau tidak valid');
-    }
-
-    const parentResult = await this._pool.query({
-      text: 'SELECT id FROM comments WHERE id = $1',
-      values: [parentId],
-    });
-
-    if (!parentResult.rowCount) {
-      throw new NotFoundError('comment tidak ditemukan atau tidak valid');
-    }
 
     const query = {
       text: `INSERT INTO comments (
@@ -52,20 +32,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     return new AddedReply({ ...result.rows[0] });
   }
 
-  async deleteReplyById(userId, threadId, parentId, replyId) {
-    const replyResult = await this._pool.query({
-      text: 'SELECT owner FROM comments WHERE thread_id = $1 AND parent_id = $2 AND id = $3',
-      values: [threadId, parentId, replyId],
-    });
-
-    if (!replyResult.rowCount) {
-      throw new NotFoundError(`reply tidak ada atau tidak valid`);
-    }
-
-    if (replyResult.rows[0].owner !== userId) {
-      throw new AuthorizationError('user bukan owner dari reply');
-    }
-
+  async deleteReplyById(threadId, parentId, replyId) {
     this._pool.query({
       text: 'UPDATE comments SET is_delete = true WHERE thread_id = $1 AND parent_id = $2 AND id = $3',
       values: [threadId, parentId, replyId],

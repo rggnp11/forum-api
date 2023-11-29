@@ -3,7 +3,15 @@ class ReplyRepository {
     throw new Error('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 
-  async deleteReplyById(userId, threadId, parentId, replyId) {
+  async verifyReplyAvailability(replyId) {
+    throw new Error('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
+
+  async verifyReplyOwner(userId, replyId) {
+    throw new Error('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
+
+  async deleteReplyById(threadId, parentId, replyId) {
     throw new Error('REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
   
