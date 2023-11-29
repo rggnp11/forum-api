@@ -1,8 +1,6 @@
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
-const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
-const AuthorizationError = require('../../../Commons/exceptions/AuthorizationError');
 const AddComment = require('../../../Domains/comments/entities/AddComment');
 const AddedComment = require('../../../Domains/comments/entities/AddedComment');
 const pool = require('../../database/postgres/pool');
@@ -92,11 +90,11 @@ describe('CommentRepositoryPostgres', () => {
 
       // Action
       await commentRepositoryPostgres.deleteCommentById(
-        'user-123', 'thread-123', addedComment.id
-      )
+        'thread-123', addedComment.id
+      );
 
       // Assert
-      const comments = await commentRepositoryPostgres.getCommentsByThreadId(
+      const comments = await CommentsTableTestHelper.getCommentsByThreadId(
         'thread-123'
       );
       expect(comments[0].is_delete).toEqual(true);
