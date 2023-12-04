@@ -103,6 +103,19 @@ describe('ThreadRepositoryPostgres', () => {
   });
 
   describe('getThreadById function', () => {
+    it('should return null when thread not exist', async () => {
+      // Arrange
+      const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
+
+      // Action
+      const thread = await threadRepositoryPostgres.getThreadById(
+        'thread-123'
+      );
+
+      // Assert
+      expect(thread).toEqual(null);
+    });
+
     it('should return correct thread when thread exists', async () => {
       // Arrange
       await ThreadsTableTestHelper.addThread({

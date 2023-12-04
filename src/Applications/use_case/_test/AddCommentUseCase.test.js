@@ -72,6 +72,9 @@ describe('AddCommentUseCase', () => {
       owner: 'user-123',
     }));
 
+    expect(mockThreadRepository.verifyThreadAvailability).toHaveBeenCalledWith(
+      'thread-123'
+    );
     expect(mockCommentRepository.addComment).toHaveBeenCalledWith(
       'user-123',
       'thread-123',

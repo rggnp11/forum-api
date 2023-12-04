@@ -63,6 +63,10 @@ describe('DeleteReplyUseCase', () => {
     );
 
     // Assert
+    expect(mockReplyRepository.verifyReplyAvailability)
+      .toHaveBeenCalledWith('reply-123');
+    expect(mockReplyRepository.verifyReplyOwner)
+      .toHaveBeenCalledWith('user-123', 'reply-123');
     expect(mockReplyRepository.deleteReplyById)
       .toHaveBeenCalledWith(
         'thread-123', 'comment-123', 'reply-123'

@@ -108,6 +108,10 @@ describe('AddReplyUseCase', () => {
       owner: 'user-123',
     }));
 
+    expect(mockThreadRepository.verifyThreadAvailability)
+      .toHaveBeenCalledWith('thread-123');
+    expect(mockCommentRepository.verifyCommentAvailability)
+      .toHaveBeenCalledWith('comment-123');
     expect(mockReplyRepository.addReply).toHaveBeenCalledWith(
       'user-123',
       'thread-123',

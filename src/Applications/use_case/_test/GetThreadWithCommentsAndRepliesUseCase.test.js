@@ -4,7 +4,7 @@ const ReplyRepository = require('../../../Domains/replies/ReplyRepository');
 const GetThreadWithCommentsAndRepliesUseCase = require('../GetThreadWithCommentsAndRepliesUseCase');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 
-describe('GetThreadDetailUseCase', () => {
+describe('GetThreadWithCommentsAndRepliesUseCase', () => {
   it('should throw NotFoundError when thread not exist', async() => {
     // Arrange
     /** creating dependency of use case */
@@ -55,7 +55,7 @@ describe('GetThreadDetailUseCase', () => {
           is_delete: true,
         },
       ];
-      const repliesPayload = [
+      const repliesPayload1 = [
         {
           id: 'reply-123',
           username: 'dicoding',
@@ -63,6 +63,8 @@ describe('GetThreadDetailUseCase', () => {
           content: 'Reply content 1',
           is_delete: true,
         },
+      ];
+      const repliesPayload2 = [
         {
           id: 'reply-456',
           username: 'dicoding',
@@ -83,8 +85,15 @@ describe('GetThreadDetailUseCase', () => {
       mockCommentRepository.getCommentsByThreadId = jest.fn()
         .mockImplementation(() => Promise.resolve(commentsPayload));
       mockReplyRepository.getRepliesByParentId = jest.fn()
-        .mockImplementation(() => Promise.resolve(repliesPayload));
-      
+        .mockImplementation((commentId) => {
+          if (commentId === 'comment-123') {
+            return repliesPayload1;
+          } else if (commentId === 'comment-456') {
+            return repliesPayload2;
+          }
+          return  [];
+        });
+
       /** creating use case instance */
       const getThreadWithCommentsAndRepliesUseCase =
         new GetThreadWithCommentsAndRepliesUseCase({
@@ -114,11 +123,6 @@ describe('GetThreadDetailUseCase', () => {
                 username: 'dicoding',
                 content: '**balasan telah dihapus**',
               },
-              {
-                id: 'reply-456',
-                username: 'dicoding',
-                content: 'Reply content 2',
-              },
             ],
           },
           {
@@ -126,11 +130,6 @@ describe('GetThreadDetailUseCase', () => {
             username: 'dicoding',
             content: '**komentar telah dihapus**',
             replies: [
-              {
-                id: 'reply-123',
-                username: 'dicoding',
-                content: '**balasan telah dihapus**',
-              },
               {
                 id: 'reply-456',
                 username: 'dicoding',
@@ -140,12 +139,14 @@ describe('GetThreadDetailUseCase', () => {
           }
         ],
       });
-      expect(mockThreadRepository.getThreadById).toHaveBeenCalledWith(
-        'thread-123'
-      );
-      expect(mockCommentRepository.getCommentsByThreadId).toHaveBeenCalledWith(
-        'thread-123'
-      );
+      expect(mockThreadRepository.getThreadById)
+        .toHaveBeenCalledWith('thread-123');
+      expect(mockCommentRepository.getCommentsByThreadId)
+        .toHaveBeenCalledWith('thread-123');
+      expect(mockReplyRepository.getRepliesByParentId)
+        .toHaveBeenCalledWith('comment-123');
+      expect(mockReplyRepository.getRepliesByParentId)
+        .toHaveBeenCalledWith('comment-456');
     }
   );
 });
