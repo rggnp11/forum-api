@@ -7,8 +7,9 @@ describe('DeleteCommentUseCase', () => {
   it('should throw NotFoundError when comment not exist', async() => {
     // Arrange
     const mockCommentRepository = new CommentRepository();
-    mockCommentRepository.verifyCommentAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve(false));
+    mockCommentRepository.verifyCommentAvailability = jest.fn(
+      () => Promise.resolve(false)
+    );
       
     const deleteCommentUseCase = new DeleteCommentUseCase({
       commentRepository: mockCommentRepository,
@@ -26,10 +27,12 @@ describe('DeleteCommentUseCase', () => {
     async() => {
       // Arrange
       const mockCommentRepository = new CommentRepository();
-      mockCommentRepository.verifyCommentAvailability = jest.fn()
-        .mockImplementation(() => Promise.resolve(true));
-      mockCommentRepository.verifyCommentOwner = jest.fn()
-        .mockImplementation(() => Promise.resolve(false));
+      mockCommentRepository.verifyCommentAvailability = jest.fn(
+        () => Promise.resolve(true)
+      );
+      mockCommentRepository.verifyCommentOwner = jest.fn(
+        () => Promise.resolve(false)
+      );
         
       const deleteCommentUseCase = new DeleteCommentUseCase({
         commentRepository: mockCommentRepository,
@@ -46,12 +49,15 @@ describe('DeleteCommentUseCase', () => {
   it('should orchestrating the delete comment action correctly', async () => {
     // Arrange
     const mockCommentRepository = new CommentRepository();
-    mockCommentRepository.verifyCommentAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve(true));
-    mockCommentRepository.verifyCommentOwner = jest.fn()
-      .mockImplementation(() => Promise.resolve(true));
-    mockCommentRepository.deleteCommentById = jest.fn()
-      .mockImplementation(() => Promise.resolve());
+    mockCommentRepository.verifyCommentAvailability = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockCommentRepository.verifyCommentOwner = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockCommentRepository.deleteCommentById = jest.fn(
+      () => Promise.resolve()
+    );
     
     const deleteCommentUseCase = new DeleteCommentUseCase({
       commentRepository: mockCommentRepository,

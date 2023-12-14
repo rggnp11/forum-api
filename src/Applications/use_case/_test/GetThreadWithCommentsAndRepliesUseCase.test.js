@@ -11,8 +11,9 @@ describe('GetThreadWithCommentsAndRepliesUseCase', () => {
     const mockThreadRepository = new ThreadRepository();
 
     /** mocking needed function */
-    mockThreadRepository.getThreadById = jest.fn()
-      .mockImplementation(() => Promise.resolve(null));
+    mockThreadRepository.getThreadById = jest.fn(
+      () => Promise.resolve(null)
+    );
     
     /** creating use case instance */
     const getThreadWithCommentsAndRepliesUseCase =
@@ -80,19 +81,20 @@ describe('GetThreadWithCommentsAndRepliesUseCase', () => {
       const mockReplyRepository = new ReplyRepository();
 
       /** mocking needed function */
-      mockThreadRepository.getThreadById = jest.fn()
-        .mockImplementation(() => Promise.resolve(threadPayload));
-      mockCommentRepository.getCommentsByThreadId = jest.fn()
-        .mockImplementation(() => Promise.resolve(commentsPayload));
-      mockReplyRepository.getRepliesByParentId = jest.fn()
-        .mockImplementation((commentId) => {
-          if (commentId === 'comment-123') {
-            return repliesPayload1;
-          } else if (commentId === 'comment-456') {
-            return repliesPayload2;
-          }
-          return  [];
-        });
+      mockThreadRepository.getThreadById = jest.fn(
+        () => Promise.resolve(threadPayload)
+      );
+      mockCommentRepository.getCommentsByThreadId = jest.fn(
+        () => Promise.resolve(commentsPayload)
+      );
+      mockReplyRepository.getRepliesByParentId = jest.fn((commentId) => {
+        if (commentId === 'comment-123') {
+          return repliesPayload1;
+        } else if (commentId === 'comment-456') {
+          return repliesPayload2;
+        }
+        return [];
+      });
 
       /** creating use case instance */
       const getThreadWithCommentsAndRepliesUseCase =

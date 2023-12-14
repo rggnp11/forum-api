@@ -7,8 +7,9 @@ describe('DeleteReplyUseCase', () => {
   it('should throw NotFoundError when reply not exist', async () => {
     // Arrange
     const mockReplyRepository = new ReplyRepository();
-    mockReplyRepository.verifyReplyAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve(false));
+    mockReplyRepository.verifyReplyAvailability = jest.fn(
+      () => Promise.resolve(false)
+    );
 
     const deleteReplyUseCase = new DeleteReplyUseCase({
       replyRepository: mockReplyRepository,
@@ -26,10 +27,12 @@ describe('DeleteReplyUseCase', () => {
     async () => {
       // Arrange
       const mockReplyRepository = new ReplyRepository();
-      mockReplyRepository.verifyReplyAvailability = jest.fn()
-        .mockImplementation(() => Promise.resolve(true));
-      mockReplyRepository.verifyReplyOwner = jest.fn()
-        .mockImplementation(() => Promise.resolve(false));
+      mockReplyRepository.verifyReplyAvailability = jest.fn(
+        () => Promise.resolve(true)
+      );
+      mockReplyRepository.verifyReplyOwner = jest.fn(
+        () => Promise.resolve(false)
+      );
 
       const deleteReplyUseCase = new DeleteReplyUseCase({
         replyRepository: mockReplyRepository,
@@ -46,12 +49,15 @@ describe('DeleteReplyUseCase', () => {
   it('should orchestrating the delete reply action correctly', async () => {
     // Arrange
     const mockReplyRepository = new ReplyRepository();
-    mockReplyRepository.verifyReplyAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve(true));
-    mockReplyRepository.verifyReplyOwner = jest.fn()
-      .mockImplementation(() => Promise.resolve(true));
-    mockReplyRepository.deleteReplyById = jest.fn()
-      .mockImplementation(() => Promise.resolve());
+    mockReplyRepository.verifyReplyAvailability = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockReplyRepository.verifyReplyOwner = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockReplyRepository.deleteReplyById = jest.fn(
+      () => Promise.resolve()
+    );
     
     const deleteReplyUseCase = new DeleteReplyUseCase({
       replyRepository: mockReplyRepository,

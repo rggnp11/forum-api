@@ -17,8 +17,9 @@ describe('AddReplyUseCase', () => {
     const mockThreadRepository = new ThreadRepository();
 
     /** mocking needed function */
-    mockThreadRepository.verifyThreadAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve(false));
+    mockThreadRepository.verifyThreadAvailability = jest.fn(
+      () => Promise.resolve(false)
+    );
 
     /** creating use case instance */
     const addReplyUseCase = new AddReplyUseCase({
@@ -45,10 +46,12 @@ describe('AddReplyUseCase', () => {
     const mockCommentRepository = new CommentRepository();
 
     /** mocking needed function */
-    mockThreadRepository.verifyThreadAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve(true));
-    mockCommentRepository.verifyCommentAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve(false));
+    mockThreadRepository.verifyThreadAvailability = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockCommentRepository.verifyCommentAvailability = jest.fn(
+      () => Promise.resolve(false)
+    );
 
     /** creating use case instance */
     const addReplyUseCase = new AddReplyUseCase({
@@ -82,12 +85,15 @@ describe('AddReplyUseCase', () => {
     const mockReplyRepository = new ReplyRepository();
 
     /** mocking needed function */
-    mockThreadRepository.verifyThreadAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve(true));
-    mockCommentRepository.verifyCommentAvailability = jest.fn()
-      .mockImplementation(() => Promise.resolve(true));
-    mockReplyRepository.addReply = jest.fn()
-      .mockImplementation(() => Promise.resolve(mockAddedReply));
+    mockThreadRepository.verifyThreadAvailability = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockCommentRepository.verifyCommentAvailability = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockReplyRepository.addReply = jest.fn(
+      () => Promise.resolve(mockAddedReply)
+    );
     
     /** creating use case instance */
     const addReplyUseCase = new AddReplyUseCase({
