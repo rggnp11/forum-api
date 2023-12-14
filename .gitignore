@@ -4,3 +4,5 @@ package-lock.json
 coverage
 .env
 .env_init
+*.pem
+config/database/test.json
