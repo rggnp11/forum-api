@@ -5,10 +5,12 @@ class GetThreadWithCommentsAndRepliesUseCase {
     threadRepository,
     commentRepository,
     replyRepository,
+    likeRepository,
   }) {
     this._threadRepository = threadRepository;
     this._commentRepository = commentRepository;
     this._replyRepository = replyRepository;
+    this._likeRepository = likeRepository;
   }
 
   async execute(threadId) {
@@ -35,19 +37,24 @@ class GetThreadWithCommentsAndRepliesUseCase {
         replies.push(this.dataToReply(repliesData[j]));
       }
 
-      comments.push(this.dataToComment(commentsData[i], replies));
+      const likeCount = await this._likeRepository.getLikeCountByCommentId(
+        commentsData[i].id
+      );
+
+      comments.push(this.dataToComment(commentsData[i], replies, likeCount));
     }
 
     return { ...thread, comments };
   }
 
-  dataToComment({id, username, date, content, is_delete}, replies) {
+  dataToComment({id, username, date, content, is_delete}, replies, likeCount) {
     return {
       id,
       username,
       date,
       content: (is_delete === true ? '**komentar telah dihapus**' : content),
       replies,
+      likeCount,
     };
   };
 
