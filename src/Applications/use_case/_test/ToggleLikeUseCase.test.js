@@ -87,5 +87,55 @@ describe('ToggleLikeUseCase', () => {
     await toggleLikeCuseCase.execute('user-123', 'thread-123', 'comment-123');
 
     // Assert
+    expect(mockThreadRepository.verifyThreadAvailability)
+      .toHaveBeenCalledWith('thread-123');
+    expect(mockCommentRepository.verifyCommentAvailability)
+      .toHaveBeenCalledWith('comment-123');
+    expect(mockLikeRepository.verifyLikeAvailability)
+      .toHaveBeenCalledWith('user-123', 'comment-123');
+    expect(mockLikeRepository.addLike)
+      .toHaveBeenCalledWith('user-123', 'comment-123');
+  });
+
+  it('should orchestrating the delete like action correctly', async () => {
+    // Arrange
+    /** creating dependency of use case */
+    const mockThreadRepository = new ThreadRepository();
+    const mockCommentRepository = new CommentRepository();
+    const mockLikeRepository = new LikeRepository();
+
+    /** mocking needed function */
+    mockThreadRepository.verifyThreadAvailability = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockCommentRepository.verifyCommentAvailability = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockLikeRepository.verifyLikeAvailability = jest.fn(
+      () => Promise.resolve(true)
+    );
+    mockLikeRepository.deleteLikeByCommentId = jest.fn(
+      () => Promise.resolve()
+    );
+
+    /** creating use case instance */
+    const toggleLikeCuseCase = new ToggleLikeUseCase({
+      threadRepository: mockThreadRepository,
+      commentRepository: mockCommentRepository,
+      likeRepository: mockLikeRepository,
+    });
+    
+    // Action
+    await toggleLikeCuseCase.execute('user-123', 'thread-123', 'comment-123');
+
+    // Assert
+    expect(mockThreadRepository.verifyThreadAvailability)
+      .toHaveBeenCalledWith('thread-123');
+    expect(mockCommentRepository.verifyCommentAvailability)
+      .toHaveBeenCalledWith('comment-123');
+    expect(mockLikeRepository.verifyLikeAvailability)
+      .toHaveBeenCalledWith('user-123', 'comment-123');
+    expect(mockLikeRepository.deleteLikeByCommentId)
+      .toHaveBeenCalledWith('user-123', 'comment-123');
   });
 });
