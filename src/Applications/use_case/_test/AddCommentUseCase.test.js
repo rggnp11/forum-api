@@ -27,7 +27,7 @@ describe('AddCommentUseCase', () => {
     });
 
     // Action and Assert
-    expect(addCommentUseCase.execute(
+    await expect(addCommentUseCase.execute(
       'user-123', 'thread-123', useCasePayload
     )).rejects
       .toThrowError(NotFoundError);

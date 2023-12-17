@@ -24,7 +24,7 @@ describe('GetThreadWithCommentsAndRepliesUseCase', () => {
       });
     
     // Action & Assert
-    expect(getThreadWithCommentsAndRepliesUseCase.execute('thread-123'))
+    await expect(getThreadWithCommentsAndRepliesUseCase.execute('thread-123'))
       .rejects
       .toThrow(NotFoundError);
   });
