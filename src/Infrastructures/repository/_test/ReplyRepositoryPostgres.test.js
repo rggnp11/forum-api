@@ -46,7 +46,7 @@ describe('ReplyRepositoryPostgres', () => {
   });
 
   describe('addReply function', () => {
-    it('should persis addReply and return reply correctly', async () => {
+    it('should persist addReply and return reply correctly', async () => {
       // Arrange
       const addReply = new AddReply({ content: 'Reply content' });
       const fakeIdGenerator = () => '123'; // stub!

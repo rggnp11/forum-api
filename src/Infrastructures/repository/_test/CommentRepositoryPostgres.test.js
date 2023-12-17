@@ -34,7 +34,7 @@ describe('CommentRepositoryPostgres', () => {
   });
 
   describe('addComment function', () => {
-    it('should persis addComment and return comment correctly', async () => {
+    it('should persist addComment and return comment correctly', async () => {
       // Arrange
       const addComment = new AddComment({ content: 'Comment content' });
       const fakeIdGenerator = () => '123'; // stub!
