@@ -1,6 +1,7 @@
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
 const ReplyRepository = require('../../../Domains/replies/ReplyRepository');
+const LikeRepository = require('../../../Domains/likes/LikeRepository');
 const GetThreadWithCommentsAndRepliesUseCase = require('../GetThreadWithCommentsAndRepliesUseCase');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 
@@ -21,6 +22,7 @@ describe('GetThreadWithCommentsAndRepliesUseCase', () => {
         threadRepository: mockThreadRepository,
         commentRepository: new CommentRepository(),
         replyRepository: new ReplyRepository(),
+        likeRepository: new LikeRepository(),
       });
     
     // Action & Assert
@@ -74,11 +76,14 @@ describe('GetThreadWithCommentsAndRepliesUseCase', () => {
           is_delete: false,
         },
       ];
+      const likeCount1 = 1;
+      const likeCount2 = 2;
 
       /** creating dependency of use case */
       const mockThreadRepository = new ThreadRepository();
       const mockCommentRepository = new CommentRepository();
       const mockReplyRepository = new ReplyRepository();
+      const mockLikeRepository = new LikeRepository();
 
       /** mocking needed function */
       mockThreadRepository.getThreadById = jest.fn(
@@ -95,6 +100,14 @@ describe('GetThreadWithCommentsAndRepliesUseCase', () => {
         }
         return [];
       });
+      mockLikeRepository.getLikeCountByCommentId = jest.fn((commentId) => {
+        if (commentId === 'comment-123') {
+          return likeCount1;
+        } else if (commentId === 'comment-456') {
+          return likeCount2;
+        }
+        return 0;
+      });
 
       /** creating use case instance */
       const getThreadWithCommentsAndRepliesUseCase =
@@ -102,6 +115,7 @@ describe('GetThreadWithCommentsAndRepliesUseCase', () => {
           threadRepository: mockThreadRepository,
           commentRepository: mockCommentRepository,
           replyRepository: mockReplyRepository,
+          likeRepository: mockLikeRepository,
         });
 
       // Action
@@ -126,6 +140,7 @@ describe('GetThreadWithCommentsAndRepliesUseCase', () => {
                 content: '**balasan telah dihapus**',
               },
             ],
+            likeCount: 1,
           },
           {
             id: 'comment-456',
@@ -138,6 +153,7 @@ describe('GetThreadWithCommentsAndRepliesUseCase', () => {
                 content: 'Reply content 2',
               },
             ],
+            likeCount: 2,
           }
         ],
       });
