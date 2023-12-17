@@ -6,3 +6,4 @@ coverage
 .env_init
 *.pem
 config/database/test.json
+default

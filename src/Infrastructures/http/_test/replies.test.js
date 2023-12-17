@@ -38,6 +38,7 @@ describe('/threads/{threadId}/comments/{commentId}/replies endpoint', () => {
         // Assert
         const responseJson = JSON.parse(response.payload);
         expect(response.statusCode).toEqual(401);
+        expect(responseJson.message).toEqual('Missing authentication');
       });
 
       it('should response 400 if payload data missing', async () => {
@@ -360,6 +361,7 @@ describe('/threads/{threadId}/comments/{commentId}/replies endpoint', () => {
         // Assert
         const responseJson = JSON.parse(response.payload);
         expect(response.statusCode).toEqual(401);
+        expect(responseJson.message).toEqual('Missing authentication');
       });
 
       it('should response 404 when the reply not exist', async () => {
@@ -389,14 +391,17 @@ describe('/threads/{threadId}/comments/{commentId}/replies endpoint', () => {
         // Action
         const response = await server.inject({
           method: 'DELETE',
-          url: `/threads/thread-XXXXXXXXXX/comment/comment-XXXXXXXXXX/replies/reply-XXXXXXXXXX`,
+          url: `/threads/thread-XXXXXXXXXX/comments/comment-XXXXXXXXXX/replies/reply-XXXXXXXXXX`,
           headers: {
             'Authorization': `Bearer ${authJson.data.accessToken}`,
           },
         });
 
         // Assert
+        const responseJson = JSON.parse(response.payload);
         expect(response.statusCode).toEqual(404);
+        expect(responseJson.status).toEqual('fail');
+        expect(responseJson.message).toEqual('balasan tidak ditemukan atau tidak valid');
       });
 
       it('should response 403 when deleted not by owner', async() => {
@@ -435,7 +440,7 @@ describe('/threads/{threadId}/comments/{commentId}/replies endpoint', () => {
           method: 'POST',
           url: '/authentications',
           payload: {
-            username: 'dicoding',
+            username: 'johndoe',
             password: 'secret',
           },
         });
@@ -486,8 +491,11 @@ describe('/threads/{threadId}/comments/{commentId}/replies endpoint', () => {
         });
 
         // Assert
-        expect(response.statusCode).toEqual(200);
-      });
+        const responseJson = JSON.parse(response.payload);
+        expect(response.statusCode).toEqual(403);
+        expect(responseJson.status).toEqual('fail');
+        expect(responseJson.message).toEqual('user bukan owner dari balasan');
+        });
 
       it('should response 200', async() => {
         // Arrange

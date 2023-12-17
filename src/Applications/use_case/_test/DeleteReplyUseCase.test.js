@@ -16,7 +16,7 @@ describe('DeleteReplyUseCase', () => {
     });
 
     // Action & Assert
-    expect(deleteReplyUseCase.execute(
+    await expect(deleteReplyUseCase.execute(
       'user-123', 'thread-123', 'comment-123', 'reply-123'
     )).rejects
       .toThrowError(NotFoundError);
@@ -39,7 +39,7 @@ describe('DeleteReplyUseCase', () => {
       });
   
       // Action & Assert
-      expect(deleteReplyUseCase.execute(
+      await expect(deleteReplyUseCase.execute(
         'user-123', 'thread-123', 'comment-123', 'reply-123'
       )).rejects
         .toThrowError(AuthorizationError);

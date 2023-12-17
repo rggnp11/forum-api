@@ -29,7 +29,7 @@ describe('AddReplyUseCase', () => {
     });
 
     // Action and Assert
-    expect(addReplyUseCase.execute(
+    await expect(addReplyUseCase.execute(
       'user-123', 'thread-123', 'comment-123', useCasePayload
     )).rejects
       .toThrowError(NotFoundError);
@@ -61,7 +61,7 @@ describe('AddReplyUseCase', () => {
     });
 
     // Action and Assert
-    expect(addReplyUseCase.execute(
+    await expect(addReplyUseCase.execute(
       'user-123', 'thread-123', 'comment-123', useCasePayload
     )).rejects
       .toThrowError(NotFoundError);
