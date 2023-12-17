@@ -265,6 +265,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
       // Assert
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(401);
+      expect(responseJson.message).toEqual('Missing authentication');
     });
 
     it('should response 404 when the comment not exist', async () => {
@@ -301,7 +302,12 @@ describe('/threads/{threadId}/comments endpoint', () => {
       });
 
       // Assert
+      const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(404);
+      expect(responseJson.status).toEqual('fail');
+      expect(responseJson.message).toEqual(
+        'komentar tidak ditemukan atau tidak valid'
+      );
     });
 
     it('should response 403 when deleted not by owner', async() => {
@@ -340,7 +346,7 @@ describe('/threads/{threadId}/comments endpoint', () => {
         method: 'POST',
         url: '/authentications',
         payload: {
-          username: 'dicoding',
+          username: 'johndoe',
           password: 'secret',
         },
       });
@@ -379,7 +385,10 @@ describe('/threads/{threadId}/comments endpoint', () => {
       });
 
       // Assert
-      expect(response.statusCode).toEqual(200);
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(403);
+      expect(responseJson.status).toEqual('fail');
+      expect(responseJson.message).toEqual('user bukan owner dari comment');
     });
 
     it('should response 200', async() => {

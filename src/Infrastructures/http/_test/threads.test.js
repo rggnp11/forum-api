@@ -37,6 +37,7 @@ describe('/threads endpoint', () => {
       // Assert
       const responseJson = JSON.parse(response.payload);
       expect(response.statusCode).toEqual(401);
+      expect(responseJson.message).toEqual('Missing authentication');
     });
 
     it('should response 400 if payload data missing', async () => {
