@@ -28,7 +28,7 @@ class ToggleLikeUseCase {
     if (!isLikeAvailable) {
       await this._likeRepository.addLike(userId, commentId);
     } else {
-      await this._likeRepository.deleteLikeByCommentId(userId, commentId);
+      await this._likeRepository.deleteLike(userId, commentId);
     }
   }
 }

@@ -114,7 +114,7 @@ describe('ToggleLikeUseCase', () => {
     mockLikeRepository.verifyLikeAvailability = jest.fn(
       () => Promise.resolve(true)
     );
-    mockLikeRepository.deleteLikeByCommentId = jest.fn(
+    mockLikeRepository.deleteLike = jest.fn(
       () => Promise.resolve()
     );
 
@@ -135,7 +135,7 @@ describe('ToggleLikeUseCase', () => {
       .toHaveBeenCalledWith('comment-123');
     expect(mockLikeRepository.verifyLikeAvailability)
       .toHaveBeenCalledWith('user-123', 'comment-123');
-    expect(mockLikeRepository.deleteLikeByCommentId)
+    expect(mockLikeRepository.deleteLike)
       .toHaveBeenCalledWith('user-123', 'comment-123');
   });
 });
