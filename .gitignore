@@ -3,6 +3,6 @@ package-lock.json
 .idea
 coverage
 .env
-.env_init
+.env_*
 *.pem
 config/database/test.json
